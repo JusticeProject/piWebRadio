@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>piWebRadio</title>
+</head>
+<body>
+    <div>
+        {% for genre in genres %}
+        <div>
+            <div>
+                <p><a href="/player?genre={{genre}}">{{genre}}</a></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

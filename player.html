@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>piWebRadio</title>
+</head>
+<body>
+    <div>
+        <p><a href="/">Select Genre</a></p>
+        <br>
+        <div>
+            <h2>{{ songname }}</h2>
+            <div>
+                <div>Genre:
+                    <b>{{ genre }}</b>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <audio autoplay controls style="width: 750px;">
+                        <source src="/song?genre={{genre}}&filename={{songname}}" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div>
+                    <a href="/prev?genre={{genre}}">Prev Song</a>&nbsp;&nbsp;&nbsp;<a href="/next?genre={{genre}}">Next Song</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <p>Playlist:</p>
+        {% for song in songlist %}
+            {% if song == songname %}
+                <b><ul><li>
+            {% endif %}
+            
+            <p><a href="/seek?genre={{genre}}&seekIndex={{loop.index0}}">{{song}}</a></p>
+        
+            {% if song == songname %}
+                </li></ul></b>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <script>
+        const audio = document.querySelector("audio");
+        audio.addEventListener("ended", (event) => {
+            console.log("Song has finished.");
+            window.location.href = "/next?genre={{genre}}";
+        });
+    </script>
+</body>
+</html>
