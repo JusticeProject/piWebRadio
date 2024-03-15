@@ -102,6 +102,7 @@ def nextSong():
     currentIndex = flask.session.get(genre, 0)
     newIndex = moveToNewSong(genre, currentIndex, 1)
     flask.session[genre] = newIndex
+    flask.session.permanent = True # make sure the cookie persists even after browser is closed
     return flask.redirect(f"/player?genre={genre}")
 
 ###############################################################################
@@ -112,6 +113,7 @@ def prevSong():
     currentIndex = flask.session.get(genre, 0)
     newIndex = moveToNewSong(genre, currentIndex, -1)
     flask.session[genre] = newIndex
+    flask.session.permanent = True # make sure the cookie persists even after browser is closed
     return flask.redirect(f"/player?genre={genre}")
     
 ###############################################################################
@@ -124,6 +126,7 @@ def seekSong():
         flask.session[genre] = int(seekIndex)
     except:
         flask.session[genre] = 0
+    flask.session.permanent = True # make sure the cookie persists even after browser is closed
     return flask.redirect(f"/player?genre={genre}")
 
 ###############################################################################
