@@ -90,6 +90,7 @@ def genrePlayer():
 @app.route("/song")
 def sendFile():
     filename = flask.request.args.get("filename")
+    filename = filename.replace("&amp;", "&") # rendering the template will change & to &amp; so change it back
     genresFolder = getGenresFolder()
     genre = flask.request.args.get("genre")
     return flask.send_from_directory(os.path.join(genresFolder, genre), filename)
