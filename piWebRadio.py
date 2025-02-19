@@ -1,12 +1,14 @@
 import flask
 import os
-import time
-import subprocess
 
 ###############################################################################
 
 # Initialize Flask.
 app = flask.Flask(__name__)
+# The secret key is used to encrypt the cookie, it's needed to make sessions work.
+# For this application it doesn't need to be super secure. For better security use 
+# the secrets module and secrets.token_hex()
+app.secret_key = "12345"
 
 MEDIA_PATH = "/media/" + os.getlogin() + "/"
 
@@ -132,29 +134,5 @@ def seekSong():
 
 ###############################################################################
 
-def getIPAddrs():
-    result = subprocess.run("hostname -I", shell=True, capture_output=True)
-    output = result.stdout.decode() + result.stderr.decode()
-    addrs = output.split()
-    return addrs
-
-###############################################################################
-
-def waitUntilNetworkReady():
-    while (True):
-        addrs = getIPAddrs()
-        for addr in addrs:
-            if (addr.count(".") == 3) and (addr != "127.0.0.1"):
-                return
-        time.sleep(0.5)
-
-###############################################################################
-
 if __name__ == "__main__":
-    waitUntilNetworkReady()
-    # The secret key is used to encrypt the cookie, it's needed to make sessions work.
-    # For this application it doesn't need to be super secure. For better security use 
-    # the secrets module and secrets.token_hex()
-    app.secret_key = "12345"
     app.run("0.0.0.0", 6513)
-    
