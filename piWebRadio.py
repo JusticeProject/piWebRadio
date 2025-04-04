@@ -51,6 +51,7 @@ def moveToNewSong(genre, currentIndex, increment=1):
 def getGenresFolder():
     # drive should have folder named "genres", use the first drive with that folder
     drives = os.listdir(MEDIA_PATH)
+    drives.sort()
     for drive in drives:
         drivePath = os.path.join(MEDIA_PATH, drive)
         if ("genres" in os.listdir(drivePath)):
